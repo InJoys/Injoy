@@ -503,7 +503,7 @@ header nav a:hover::after {
 <button class="btn buy-btn" 
   onclick="buyProduct(
     'Вибратор для ношения', 
-    'https://i.imgur.com/puwzPQ5_d.png?maxwidth=520&shape=thumb&fidelity=high',
+    'https://i.imgur.com/harVJtK_d.jpeg',
     'Новый вибратор с приложением для удаленного управления, 9 режимов вибрации, интимный массажер, питание от литиевой батареи, стимулятор для клитора, силиконовый стимулятор для женщин и пар. Устройство для незаметного удовольствия. Современная секс-игрушка.'
   )">Купить</button>
   </div>
@@ -679,33 +679,6 @@ telegramFloat.addEventListener('mouseleave', () => {
   function scrollToCatalog() {
     document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
   }
-* {
-  box-sizing: border-box;
-}
-
-body, html {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* запрещает смещение вбок */
-}
-section, .block, .modal {
-  width: 100%;
-  max-width: 100%;
-}
-@media (max-width: 600px) {
-  .navbar,
-  .hero,
-  .catalog,
-  .faq {
-    text-align: center;
-    width: 100%;
-  }
-
-  nav a {
-    display: block;
-    margin: 10px 0;
-  }
-}
 
  function buyProduct(productName, productImg, productDesc) {
     document.getElementById("modal-title").innerText = productName;
@@ -747,4 +720,3 @@ section, .block, .modal {
 
 </body>
 </html>
-
