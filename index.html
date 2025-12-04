@@ -679,6 +679,33 @@ telegramFloat.addEventListener('mouseleave', () => {
   function scrollToCatalog() {
     document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
   }
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* запрещает смещение вбок */
+}
+section, .block, .modal {
+  width: 100%;
+  max-width: 100%;
+}
+@media (max-width: 600px) {
+  .navbar,
+  .hero,
+  .catalog,
+  .faq {
+    text-align: center;
+    width: 100%;
+  }
+
+  nav a {
+    display: block;
+    margin: 10px 0;
+  }
+}
 
  function buyProduct(productName, productImg, productDesc) {
     document.getElementById("modal-title").innerText = productName;
