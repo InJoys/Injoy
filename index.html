@@ -1,0 +1,722 @@
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>InJoy</title>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0a0a0a;
+    color: white;
+  }
+
+  /* ОБЕРТКА ВСЕГО САЙТА */
+  #mainContent.blur {
+    filter: blur(10px);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ВОЗРАСТНОЕ ОКНО */
+  #agePopup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: fadeIn 0.5s ease;
+  }
+
+  #agePopup h2 {
+    font-size: 28px;
+    margin-bottom: 25px;
+  }
+
+  #agePopup button {
+    padding: 14px 28px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background: linear-gradient(90deg, #ff2bc8, #8a2dff);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255,43,200,0.4);
+    transition: 0.3s;
+  }
+
+  #agePopup button:hover {
+    transform: scale(1.06);
+    box-shadow: 0 6px 20px rgba(255,43,200,0.7);
+  }
+
+  /* ------------------------------------------------------------------- */
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 40px;
+    background: #0b0b0b;
+    border-bottom: 1px solid #1c1c1c;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header div {
+    font-family: 'Pacifico', cursive;
+    background: linear-gradient(90deg, #ffffff, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 82px;
+    font-weight: 700;
+}
+
+header nav {
+    margin-top: 2px;
+}
+
+header nav a {
+    margin-left: 35px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #ff2bc8, #8a2dff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: 0.3s;
+}
+
+header nav a:hover {
+    text-shadow: 0 0 12px #ff2bc8;
+    transform: scale(1.08);
+}
+
+header nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, #ff2bc8, #8a2dff);
+    transition: width 0.35s ease;
+    border-radius: 3px;
+}
+
+header nav a:hover::after {
+    width: 100%;
+}
+
+.hero {
+    padding: 120px 40px;
+    background: linear-gradient(135deg, #130018, #0c0010, #000000);
+    border-bottom: 1px solid #1c1c1c;
+}
+
+.hero h1 {
+    font-size: 60px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #ff2bc8, #8a2dff, #00cc66, #ffb400, #ff2bc8);
+    background-size: 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 6s ease infinite;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% }
+    50% { background-position: 100% }
+    100% { background-position: 0% }
+}
+
+.hero p {
+    font-size: 20px;
+    max-width: 550px;
+    line-height: 1.6;
+    margin-top: 20px;
+}
+
+.btn {
+    margin-top: 10px;
+    padding: 12px 28px;
+    background: linear-gradient(90deg, #ff2bc8, #8a2dff);
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(255,43,200,0.3);
+}
+
+.btn::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+}
+
+.btn:hover::after {
+    width: 300%;
+    height: 300%;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(255,43,200,0.5);
+}
+
+.feature-box {
+    margin-top: 80px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    flex: 1;
+    min-width: 250px;
+    background: #111;
+    padding: 25px;
+    border-radius: 18px;
+    border: 1px solid #262626;
+    position: relative;
+    transition: all 0.35s ease;
+}
+
+.feature:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(138,45,255,0.45);
+    border-color: #8a2dff;
+}
+
+.circle {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: #222;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: 0.35s;
+}
+
+.circle.green {
+    background: #00cc66;
+}
+
+.circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lock {
+    font-size: 38px;
+}
+
+.modal-bg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.35s ease forwards;
+    z-index: 2000;
+}
+#welcomePopup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 10000; /* выше, чем всё остальное */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    text-align: center;
+}
+
+#welcomePopup h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+#welcomePopup p {
+  font-size: 20px;
+  line-height: 1.5;
+  max-width: 500px;
+  margin-bottom: 25px;
+}
+
+#welcomePopup button {
+  padding: 12px 28px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ff2bc8, #8a2dff);
+  color: white;
+  box-shadow: 0 4px 12px rgba(255,43,200,0.4);
+  transition: 0.3s;
+}
+
+#welcomePopup button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255,43,200,0.7);
+}
+
+.modal {
+    background: #111;
+    padding: 35px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    border: 1px solid #303030;
+    animation: popup 0.4s ease forwards;
+}
+
+.modal h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.close-btn {
+    margin-top: 20px;
+    padding: 12px 22px;
+    background: #333;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.close-btn:hover {
+    background: #444;
+}
+
+#catalog {
+    padding: 60px 40px;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-top: 1px solid #1c1c1c;
+}
+
+.product {
+    width: 220px;
+    height: 320px;
+    background: #111;
+    border: 1px solid #262626;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px;
+    transition: transform 0.4s, box-shadow 0.4s, opacity 0.6s;
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.product img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    transition: transform 1.5s ease; /* плавное масштабирование */
+}
+
+.product:hover img {
+    transform: scale(1.1); /* увеличиваем картинку на 10% */
+}
+
+}
+
+.product h4 {
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    margin: 0;
+}
+
+.product:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(138, 45, 255, 0.5);
+}
+
+.show {
+    opacity: 1 !important;
+    transform: translateY(0px) !important;
+}
+
+/* НИЖНИЕ РАЗДЕЛЫ */
+/* Контейнер для всех footer-секций */
+.footer-section {
+    padding: 60px 40px;
+    background: #0b0b0b;
+    border-top: 1px solid #1c1c1c;
+    max-width: 900px;   /* ограничиваем ширину */
+    margin: 0 auto;     /* центрируем на странице */
+}
+
+/* Если хотите столбцы внутри одной секции */
+.footer-section-columns {
+    display: flex;
+    gap: 40px;          /* расстояние между столбцами */
+    flex-wrap: wrap;    /* перенос на новую строку если мало места */
+}
+
+.faq-item {
+    flex: 1 1 250px;    /* минимальная ширина 250px, растягивается при необходимости */
+    margin-bottom: 20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ПОПАП ВОЗРАСТА -->
+<div id="agePopup">
+  <h2>Подтвердите, что вам 18+</h2>
+  <button id="ageBtn">Мне есть 18</button>
+</div>
+<!-- ПОПАП ПРИВЕТСТВИЯ -->
+<div id="welcomePopup">
+  <h2>Привет!</h2>
+  <p>Магазин будет работать с 7 января, а пока можете ознакомиться с товарами.</p>
+  <button id="welcomeBtn">Ок, посмотрю каталог</button>
+</div>
+
+
+<!-- ВЕСЬ КОНТЕНТ САЙТА -->
+<div id="mainContent" class="blur">
+
+<header style="padding: 15px 40px;"> <!-- меньше padding сверху/снизу -->
+  <div style="position: relative; display: inline-block;">
+    <span style="font-family: 'Pacifico', cursive; font-size:40px; font-weight:700; background: linear-gradient(90deg, #ff2bc8, #8a2dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      InJoy
+
+  </div>
+
+  <nav style="margin-top:40px; display:inline-block;"> <!-- меньше отступ от названия -->
+    <a onclick="openModal('about')">О нас</a>
+    <a onclick="openModal('delivery')">Доставка</a>
+    <a href="#catalog">Каталог</a>
+    <a onclick="openModal('support')">Поддержка</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Лучшие товары для <span class="gradient">взрослых</span></h1>
+  <p>Мы предлагаем премиальный ассортимент товаров для удовольствия, качества и комфорта. Конфиденциальность гарантирована.</p>
+  <button class="btn" onclick="scrollToCatalog()">Перейти в каталог</button>
+
+  <div class="feature-box">
+
+    <div class="feature">
+      <div class="circle">
+        <img src="https://i.imgur.com/TZNUsQ4.jpeg" alt="balaclava">
+      </div>
+      <h3>Быстрая доставка</h3>
+      <p>Ускоренная обработка и отправка заказов.</p>
+    </div>
+<!-- Плавающий кружок Telegram -->
+<div id="telegramFloat" style="
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(90deg, #ff2bc8, #8a2dff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(255,43,200,0.4);
+  cursor: pointer;
+  z-index: 9999;
+  transition: transform 0.3s, box-shadow 0.3s;
+">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" 
+       alt="Telegram" style="width:28px; height:28px;">
+</div>
+
+    <div class="feature">
+      <div class="circle green"></div>
+      <h3>Качество</h3>
+      <p>Мы отбираем только проверенные товары.</p>
+    </div>
+
+    <div class="feature">
+      <div class="circle">
+        <span class="lock">🔒</span>
+      </div>
+      <h3>Конфиденциальность</h3>
+      <p>Ваш заказ упакован нейтрально и безопасно.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- МОДАЛ -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <h2 id="modal-title"></h2>
+    <p id="modal-text"></p>
+    <button class="close-btn" onclick="closeModal()">Закрыть</button>
+  </div>
+</div>
+
+<!-- КАТАЛОГ -->
+<section id="catalog">
+  <!-- существующие товары -->
+  <div class="product">
+    <img src="https://i.imgur.com/puwzPQ5_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="product1">
+    <h4> вибратор для ношения</h4>
+<button class="btn buy-btn" 
+  onclick="buyProduct(
+    'Вибратор для ношения', 
+    'https://i.imgur.com/harVJtK_d.jpeg',
+    'Новый вибратор с приложением для удаленного управления, 9 режимов вибрации, интимный массажер, питание от литиевой батареи, стимулятор для клитора, силиконовый стимулятор для женщин и пар. Устройство для незаметного удовольствия. Современная секс-игрушка.'
+  )">Купить</button>
+  </div>
+
+  <div class="product">
+    <img src="https://i.imgur.com/AdEi9w9_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="product2">
+    <h4>10 шт. набор для БДСМ, комплект из PU+плюша</h4>
+<button class="btn buy-btn" 
+  onclick="buyProduct(
+    'Вибратор для ношения', 
+    'https://i.imgur.com/harVJtK_d.jpeg',
+    'Новый вибратор с приложением для удаленного управления, 9 режимов вибрации, интимный массажер, питание от литиевой батареи, стимулятор для клитора, силиконовый стимулятор для женщин и пар. Устройство для незаметного удовольствия. Современная секс-игрушка.'
+  )">Купить</button>
+  </div>
+
+  <div class="product">
+    <img src="https://i.imgur.com/5X19RYL_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="product3">
+    <h4>Плакат "Игра в любовь" - 100 способов</h4>
+<button class="btn buy-btn" 
+  onclick="buyProduct(
+    'Вибратор для ношения', 
+    'https://i.imgur.com/harVJtK_d.jpeg',
+    'Новый вибратор с приложением для удаленного управления, 9 режимов вибрации, интимный массажер, питание от литиевой батареи, стимулятор для клитора, силиконовый стимулятор для женщин и пар. Устройство для незаметного удовольствия. Современная секс-игрушка.'
+  )">Купить</button>
+  </div>
+
+  <div class="product">
+    <img src="https://i.imgur.com/3G5QqKE_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="product4">
+    <h4>Сексуальный стимулирующий женский ошейник</h4>
+<button class="btn buy-btn" 
+  onclick="buyProduct(
+    'Вибратор для ношения', 
+    'https://i.imgur.com/harVJtK_d.jpeg',
+    'Новый вибратор с приложением для удаленного управления, 9 режимов вибрации, интимный массажер, питание от литиевой батареи, стимулятор для клитора, силиконовый стимулятор для женщин и пар. Устройство для незаметного удовольствия. Современная секс-игрушка.'
+  )">Купить</button>
+  </div>
+
+   <div class="product">
+    <img src="https://i.imgur.com/hzTKqLW_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="product1">
+    <h4>SM перчатки</h4>
+<button class="btn buy-btn" 
+  onclick="buyProduct(
+    'Вибратор для ношения', 
+    'https://i.imgur.com/harVJtK_d.jpeg',
+    'Новый вибратор с приложением для удаленного управления, 9 режимов вибрации, интимный массажер, питание от литиевой батареи, стимулятор для клитора, силиконовый стимулятор для женщин и пар. Устройство для незаметного удовольствия. Современная секс-игрушка.'
+  )">Купить</button>
+  </div>
+
+  <div class="product">
+    <img src="https://i.imgur.com/0VWs9F8_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="product2">
+    <h4>Фиолетовый дилдо</h4>
+<button class="btn buy-btn" 
+  onclick="buyProduct(
+    'Вибратор для ношения', 
+    'https://i.imgur.com/harVJtK_d.jpeg',
+    'Новый вибратор с приложением для удаленного управления, 9 режимов вибрации, интимный массажер, питание от литиевой батареи, стимулятор для клитора, силиконовый стимулятор для женщин и пар. Устройство для незаметного удовольствия. Современная секс-игрушка.'
+  )">Купить</button>
+  </div>
+
+  <div class="product">
+    <img src=https://i.imgur.com/onLOLi8_d.png?maxwidth=520&shape=thumb&fidelity=high" alt="product3">
+    <h4>Дилдо</h4>
+<button class="btn buy-btn" 
+  onclick="buyProduct(
+    'Вибратор для ношения', 
+    'https://i.imgur.com/harVJtK_d.jpeg',
+    'Новый вибратор с приложением для удаленного управления, 9 режимов вибрации, интимный массажер, питание от литиевой батареи, стимулятор для клитора, силиконовый стимулятор для женщин и пар. Устройство для незаметного удовольствия. Современная секс-игрушка.'
+  )">Купить</button>
+  </div>
+
+  <div class="product">
+    <img src="https://i.imgur.com/spmyyVP.png" alt="product4">
+    <h4>Вибратор для влагалища</h4>
+<button class="btn buy-btn" 
+  onclick="buyProduct(
+    'Вибратор для ношения', 
+    'https://i.imgur.com/harVJtK_d.jpeg',
+    'Новый вибратор с приложением для удаленного управления, 9 режимов вибрации, интимный массажер, питание от литиевой батареи, стимулятор для клитора, силиконовый стимулятор для женщин и пар. Устройство для незаметного удовольствия. Современная секс-игрушка.'
+  )">Купить</button>
+  </div>
+</section>
+
+<!-- НИЖНИЕ РАЗДЕЛЫ -->
+<section class="footer-section">
+  <h2>FAQ — Частые вопросы</h2>
+  <div class="footer-section-columns">
+    <div class="faq-item">
+      <h3>Как происходит упаковка?</h3>
+      <p>Все заказы упаковываются в нейтральные упаковки без надписей.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Как оплатить заказ?</h3>
+      <p>Оплата происходит после связи в Telegram. Мы поддерживаем удобные безопасные методы оплаты.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Как быстро доставляется заказ?</h3>
+      <p>В большинстве случаев заказ отправляется в тот же день.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Можно ли вернуть товар?</h3>
+      <p>Да, при заводском браке или повреждении упаковки мы обеспечим замену.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Как связаться с поддержкой?</h3>
+      <p>Через Telegram или форму обратной связи на сайте.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // исправленная кнопка "Мне есть 18"
+  document.getElementById('ageBtn').addEventListener('click', function() {
+    document.getElementById('mainContent').classList.remove('blur');
+    document.getElementById('agePopup').style.display = 'none';
+    window.scrollTo(0,0);
+  });
+// показываем welcome только после подтверждения 18+
+document.getElementById('ageBtn').addEventListener('click', function() {
+    document.getElementById('mainContent').classList.remove('blur');
+    document.getElementById('agePopup').style.display = 'none';
+    // показываем welcome
+    document.getElementById('welcomePopup').style.display = 'flex';
+});
+document.getElementById('welcomeBtn').addEventListener('click', function() {
+  document.getElementById('welcomePopup').style.display = 'none';
+});
+  function openModal(type) {
+    let title = "";
+    let text = "";
+
+    if (type === "about") {
+      title = "О нас";
+      text = "Мы специализируемся на премиальных интим-товарах, которые помогают парам и одиночным клиентам получать больше удовольствия, уверенности и разнообразия. Мы предлагаем только качественные, проверенные и безопасные изделия.";
+    }
+    if (type === "delivery") {
+      title = "Доставка";
+      text = "Оформление заказа через приватный Telegram-чат. Мы отвечаем быстро и полностью конфиденциально. Упаковка нейтральная, без опознавательных знаков.";
+    }
+    if (type === "support") {
+      title = "Поддержка";
+      text = `
+        <p>Введите ваше сообщение для поддержки:</p>
+        <input type="text" id="supportName" placeholder="Ваше имя" style="width:100%; margin-bottom:8px; padding:6px;">
+        <input type="text" id="supportSubject" placeholder="Тема" style="width:100%; margin-bottom:8px; padding:6px;">
+        <textarea id="supportMessage" placeholder="Сообщение" style="width:100%; height:80px; padding:6px;"></textarea>
+        <button class="btn" onclick="sendSupport()">Отправить</button>
+      `;
+    }
+
+    document.getElementById("modal-title").innerText = title;
+    document.getElementById("modal-text").innerHTML = text;
+    document.getElementById("modal").style.display = "flex";
+  }
+document.getElementById('telegramFloat').addEventListener('click', function() {
+  window.open('https://t.me/+BUkJcbjN6ME2OGFi', '_blank');
+});
+
+// Добавим лёгкую анимацию при наведении
+const telegramFloat = document.getElementById('telegramFloat');
+telegramFloat.addEventListener('mouseenter', () => {
+  telegramFloat.style.transform = 'scale(1.2)';
+  telegramFloat.style.boxShadow = '0 6px 20px rgba(255,43,200,0.6)';
+});
+telegramFloat.addEventListener('mouseleave', () => {
+  telegramFloat.style.transform = 'scale(1)';
+  telegramFloat.style.boxShadow = '0 4px 15px rgba(255,43,200,0.4)';
+});
+
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+
+  function scrollToCatalog() {
+    document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+  }
+
+ function buyProduct(productName, productImg, productDesc) {
+    document.getElementById("modal-title").innerText = productName;
+    document.getElementById("modal-text").innerHTML = `
+      <div style="display:flex; flex-direction:column; align-items:center; gap:15px;">
+        <img src="${productImg}" alt="${productName}" style="width:100%; max-width:300px; border-radius:12px;">
+        <p style="text-align:center; line-height:1.5; font-size:16px;">${productDesc}</p>
+        <a href="https://t.me/+BUkJcbjN6ME2OGFi" target="_blank" style="color:#ff2bc8; font-weight:600;">Перейти в Telegram</a>
+      </div>
+    `;
+    document.getElementById("modal").style.display = "flex";
+}
+
+
+  const products = document.querySelectorAll('.product');
+
+  function showProducts() {
+    const triggerBottom = window.innerHeight * 0.9;
+    products.forEach(product => {
+      const productTop = product.getBoundingClientRect().top;
+      if (productTop < triggerBottom) {
+        product.classList.add('show');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', showProducts);
+  window.addEventListener('load', showProducts);
+
+  function sendSupport() {
+    const name = document.getElementById('supportName').value;
+    const subject = document.getElementById('supportSubject').value;
+    const message = document.getElementById('supportMessage').value;
+
+    const mailtoLink = `mailto:edvvardsahakyan@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Имя: " + name + "\n\n" + message)}`;
+    window.location.href = mailtoLink;
+  }
+</script>
+
+</body>
+</html>
